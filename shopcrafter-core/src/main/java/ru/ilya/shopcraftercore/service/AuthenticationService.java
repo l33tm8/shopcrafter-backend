@@ -42,7 +42,7 @@ public class AuthenticationService {
         if (user.isEmpty()) {
             User newUser = new User();
             newUser.setEmail(email);
-            newUser.setRole(Role.USER);
+            newUser.setRole(Role.STORE_ADMIN);
             userRepository.save(newUser);
         }
         boolean sent = otpService.sendOtp(email);

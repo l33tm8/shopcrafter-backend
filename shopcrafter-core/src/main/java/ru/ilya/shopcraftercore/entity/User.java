@@ -11,6 +11,11 @@ public class User {
     private Long id;
     private String email;
 
+    @Column(nullable = true)
+    private String name;
+    @Column(nullable = true)
+    private String phone;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -36,5 +41,21 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
