@@ -1,7 +1,8 @@
 package ru.ilya.shopcraftergoods.service;
 
-import dto.StoreDto;
-import dto.UpdateStoreDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.ilya.shopcraftergoods.dto.store.StoreDto;
+import ru.ilya.shopcraftergoods.dto.store.UpdateStoreDto;
 import org.springframework.stereotype.Service;
 import ru.ilya.shopcraftergoods.entity.Store;
 import ru.ilya.shopcraftergoods.repository.StoreRepository;
@@ -11,6 +12,8 @@ import java.util.List;
 @Service
 public class StoreService {
     private final StoreRepository storeRepository;
+
+    @Autowired
     public StoreService(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
     }

@@ -1,5 +1,7 @@
-package dto;
+package ru.ilya.shopcraftergoods.dto.store;
 
+
+import ru.ilya.shopcraftergoods.entity.Store;
 
 import java.util.List;
 
@@ -16,6 +18,16 @@ public class StoreDto {
     private String name;
 
     private List<Long> categories;
+
+    public static StoreDto fromEntity(Store store) {
+        StoreDto dto = new StoreDto();
+        dto.setId(store.getId());
+        dto.setOwnerId(store.getOwnerId());
+        dto.setWorkerIds(store.getWorkerIds());
+        dto.setUserId(store.getUserId());
+        dto.setName(store.getName());
+        return dto;
+    }
 
     public Long getId() {
         return id;

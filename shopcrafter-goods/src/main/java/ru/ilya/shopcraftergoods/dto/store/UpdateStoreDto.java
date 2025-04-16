@@ -1,4 +1,4 @@
-package dto;
+package ru.ilya.shopcraftergoods.dto.store;
 
 public class UpdateStoreDto {
     private Long userId;
