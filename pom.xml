@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>shopcrafter-api</module>
         <module>shopcrafter-core</module>
-        <module>shopcrafter-goods</module>
     </modules>
 </project>
