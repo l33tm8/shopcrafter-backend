@@ -1,4 +1,4 @@
-package ru.ilya.shopcrafterapi.controller;
+package ru.ilya.shopcrafterapi.controller.auth;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +25,12 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleBadCredentialsException(BadCredentialsException ex) {
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleException(Exception ex) {
         return ex.getMessage();
     }
 }
