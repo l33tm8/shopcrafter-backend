@@ -9,6 +9,6 @@
 
     <modules>
         <module>shopcrafter-api</module>
-        <module>shopcrafter-core</module>
+        <module>shopcrafter-service</module>
     </modules>
 </project>

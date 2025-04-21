@@ -15,10 +15,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "ru.ilya.shopcraftercore.entity",
         "ru.ilya.shopcrafterapi.entity"
 })
-public class ShopcrafterCoreApplication {
+public class ShopcrafterApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ShopcrafterCoreApplication.class, args);
+        SpringApplication.run(ShopcrafterApplication.class, args);
     }
 
 }

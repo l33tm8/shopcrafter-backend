@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.ilya</groupId>
-    <artifactId>shopcrafter-core</artifactId>
+    <artifactId>shopcrafter-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>shopcrafter-core</name>
-    <description>shopcrafter-core</description>
+    <name>shopcrafter-service</name>
+    <description>shopcrafter-service</description>
     <url/>
     <licenses>
         <license/>
