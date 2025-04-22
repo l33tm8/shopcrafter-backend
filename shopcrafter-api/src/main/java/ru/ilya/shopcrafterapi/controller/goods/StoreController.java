@@ -3,6 +3,8 @@ package ru.ilya.shopcrafterapi.controller.goods;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.ilya.shopcraftercore.dto.goods.category.CategoryDto;
+import ru.ilya.shopcraftercore.dto.goods.product.ProductDto;
 import ru.ilya.shopcraftercore.dto.goods.store.StoreDto;
 import ru.ilya.shopcraftercore.dto.goods.store.UpdateStoreDto;
 import ru.ilya.shopcraftercore.service.goods.StoreService;
@@ -39,8 +41,5 @@ public class StoreController {
         return storeService.updateStore(id, storeDto);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteStore(@PathVariable long id) {
-        storeService.deleteStore(id);
-    }
+
 }

@@ -13,7 +13,7 @@ public class Product {
     @OneToMany
     private List<ProductVariant> variants;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
 
     private String name;

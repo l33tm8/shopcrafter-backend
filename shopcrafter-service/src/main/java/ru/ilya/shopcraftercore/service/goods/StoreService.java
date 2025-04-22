@@ -1,9 +1,14 @@
 package ru.ilya.shopcraftercore.service.goods;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import ru.ilya.shopcraftercore.dto.goods.category.CategoryDto;
+import ru.ilya.shopcraftercore.dto.goods.product.ProductDto;
 import ru.ilya.shopcraftercore.dto.goods.store.StoreDto;
 import ru.ilya.shopcraftercore.dto.goods.store.UpdateStoreDto;
 import org.springframework.stereotype.Service;
+import ru.ilya.shopcraftercore.entity.goods.Category;
+import ru.ilya.shopcraftercore.entity.goods.Product;
 import ru.ilya.shopcraftercore.entity.goods.Store;
 import ru.ilya.shopcraftercore.repository.goods.StoreRepository;
 
@@ -30,6 +35,7 @@ public class StoreService {
         return stores.stream().map(StoreDto::fromEntity).toList();
     }
 
+    @Transactional
     public StoreDto createStore(UpdateStoreDto storeDto) {
         Store store = new Store();
         store.setName(storeDto.getName());
@@ -39,6 +45,7 @@ public class StoreService {
         return StoreDto.fromEntity(store);
     }
 
+    @Transactional
     public StoreDto updateStore(long id, UpdateStoreDto storeDto) {
         Store store = storeRepository.findById(id).orElse(null);
         if (store == null) {
@@ -50,6 +57,9 @@ public class StoreService {
         return StoreDto.fromEntity(store);
     }
 
+
+
+    @Transactional
     public void deleteStore(long id) {
         storeRepository.deleteById(id);
     }
