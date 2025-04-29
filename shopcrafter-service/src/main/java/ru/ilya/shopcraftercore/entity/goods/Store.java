@@ -1,6 +1,7 @@
 package ru.ilya.shopcraftercore.entity.goods;
 
 import jakarta.persistence.*;
+import ru.ilya.shopcraftercore.entity.auth.User;
 
 import java.util.List;
 
@@ -10,12 +11,11 @@ public class Store {
     @GeneratedValue
     private Long id;
 
-    private Long ownerId;
+    @ManyToOne
+    private User owner;
 
-    @ElementCollection
-    private List<Long> workerIds;
-
-    private Long userId;
+    @OneToMany
+    private List<Worker> workers;
 
     private String name;
 
@@ -28,14 +28,6 @@ public class Store {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getName() {
@@ -62,27 +54,27 @@ public class Store {
         this.categories = categories;
     }
 
-    public void addWorker(Long workerId) {
-        workerIds.add(workerId);
+    public User getOwner() {
+        return owner;
     }
 
-    public void removeWorker(Long workerId) {
-        workerIds.remove(workerId);
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
-    public Long getOwnerId() {
-        return ownerId;
+    public List<Worker> getWorkers() {
+        return workers;
     }
 
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
+    public void setWorkers(List<Worker> workers) {
+        this.workers = workers;
     }
 
-    public List<Long> getWorkerIds() {
-        return workerIds;
+    public void addWorker(Worker worker) {
+        workers.add(worker);
     }
 
-    public void setWorkerIds(List<Long> workerIds) {
-        this.workerIds = workerIds;
+    public void removeWorker(Worker worker) {
+        workers.remove(worker);
     }
 }

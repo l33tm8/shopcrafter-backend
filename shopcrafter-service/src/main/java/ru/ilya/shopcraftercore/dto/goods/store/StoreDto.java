@@ -1,7 +1,9 @@
 package ru.ilya.shopcraftercore.dto.goods.store;
 
 
+import ru.ilya.shopcraftercore.entity.goods.Category;
 import ru.ilya.shopcraftercore.entity.goods.Store;
+import ru.ilya.shopcraftercore.entity.goods.Worker;
 
 import java.util.List;
 
@@ -13,7 +15,6 @@ public class StoreDto {
 
     private List<Long> workerIds;
 
-    private Long userId;
 
     private String name;
 
@@ -22,10 +23,15 @@ public class StoreDto {
     public static StoreDto fromEntity(Store store) {
         StoreDto dto = new StoreDto();
         dto.setId(store.getId());
-        dto.setOwnerId(store.getOwnerId());
-        dto.setWorkerIds(store.getWorkerIds());
-        dto.setUserId(store.getUserId());
+        dto.setOwnerId(store.getOwner().getId());
+        List<Long> workers = store.getWorkers() == null ? null : store.getWorkers().stream()
+                .map(worker -> worker.getUser().getId())
+                .toList();
+        dto.setWorkerIds(workers);
         dto.setName(store.getName());
+        dto.setCategories(store.getCategories() == null ? null : store.getCategories().stream()
+                .map(Category::getId)
+                .toList());
         return dto;
     }
 
@@ -51,14 +57,6 @@ public class StoreDto {
 
     public void setWorkerIds(List<Long> workerIds) {
         this.workerIds = workerIds;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getName() {

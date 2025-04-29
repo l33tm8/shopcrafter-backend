@@ -2,14 +2,13 @@ package ru.ilya.shopcraftercore.service.goods;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import ru.ilya.shopcraftercore.dto.goods.category.CategoryDto;
-import ru.ilya.shopcraftercore.dto.goods.product.ProductDto;
 import ru.ilya.shopcraftercore.dto.goods.store.StoreDto;
 import ru.ilya.shopcraftercore.dto.goods.store.UpdateStoreDto;
 import org.springframework.stereotype.Service;
-import ru.ilya.shopcraftercore.entity.goods.Category;
-import ru.ilya.shopcraftercore.entity.goods.Product;
+import ru.ilya.shopcraftercore.entity.auth.User;
 import ru.ilya.shopcraftercore.entity.goods.Store;
+import ru.ilya.shopcraftercore.exception.EntityNotFoundException;
+import ru.ilya.shopcraftercore.repository.auth.UserRepository;
 import ru.ilya.shopcraftercore.repository.goods.StoreRepository;
 
 import java.util.List;
@@ -17,10 +16,12 @@ import java.util.List;
 @Service
 public class StoreService {
     private final StoreRepository storeRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public StoreService(StoreRepository storeRepository) {
+    public StoreService(StoreRepository storeRepository, UserRepository userRepository) {
         this.storeRepository = storeRepository;
+        this.userRepository = userRepository;
     }
 
     public StoreDto getStoreById(long id) {
@@ -39,8 +40,9 @@ public class StoreService {
     public StoreDto createStore(UpdateStoreDto storeDto) {
         Store store = new Store();
         store.setName(storeDto.getName());
-        store.setOwnerId(storeDto.getOwnerId());
-        store.setUserId(storeDto.getUserId());
+        User owner = userRepository.findById(storeDto.getOwnerId()).orElseThrow(()
+                -> new EntityNotFoundException("owner not found"));
+        store.setOwner(owner);
         storeRepository.save(store);
         return StoreDto.fromEntity(store);
     }
@@ -51,8 +53,10 @@ public class StoreService {
         if (store == null) {
             return null;
         }
+        User owner = userRepository.findById(storeDto.getOwnerId()).orElseThrow(()
+                -> new EntityNotFoundException("owner not found"));
         store.setName(storeDto.getName());
-        store.setOwnerId(storeDto.getOwnerId());
+        store.setOwner(owner);
         storeRepository.save(store);
         return StoreDto.fromEntity(store);
     }

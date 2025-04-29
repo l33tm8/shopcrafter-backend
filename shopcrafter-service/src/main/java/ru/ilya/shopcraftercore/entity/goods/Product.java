@@ -2,6 +2,7 @@ package ru.ilya.shopcraftercore.entity.goods;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -10,14 +11,13 @@ public class Product {
     @GeneratedValue
     private Long id;
 
-    @OneToMany
-    private List<ProductVariant> variants;
-
     @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
 
     private String name;
     private String description;
+    private BigDecimal price;
+    private long stock;
 
     public Long getId() {
         return id;
@@ -25,14 +25,6 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public List<ProductVariant> getVariants() {
-        return variants;
-    }
-
-    public void setVariants(List<ProductVariant> variants) {
-        this.variants = variants;
     }
 
     public Category getCategory() {
@@ -57,5 +49,21 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public long getStock() {
+        return stock;
+    }
+
+    public void setStock(long stock) {
+        this.stock = stock;
     }
 }

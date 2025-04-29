@@ -73,10 +73,7 @@ public class CategoryService {
 
     @Transactional
     public void deleteCategory(long storeId, long id) {
-        Store store = storeRepository.findById(storeId).orElse(null);
-        if (store == null) {
-            throw new EntityNotFoundException("Store not found");
-        }
+        Store store = storeRepository.findById(storeId).orElseThrow(() -> new EntityNotFoundException("Store not found"));
         Category category = categoryRepository.findByStoreIdAndId(storeId, id);
         if (category == null)
             throw new EntityNotFoundException("Category not found");

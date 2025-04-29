@@ -55,10 +55,7 @@ public class ProductService {
             throw new RuntimeException("Category not found");
         }
         Product product = new Product();
-        product.setName(putProductDto.getName());
-        product.setCategory(category);
-        category.getProducts().add(product);
-        product.setDescription(putProductDto.getDescription());
+        makeProduct(putProductDto, product, category);
         productRepository.save(product);
         categoryRepository.save(category);
         return ProductDto.fromEntity(product);
@@ -74,8 +71,7 @@ public class ProductService {
         if (product == null) {
             return null;
         }
-        product.setName(putProductDto.getName());
-        product.setDescription(putProductDto.getDescription());
+        makeProduct(putProductDto, product, category);
         productRepository.save(product);
         return ProductDto.fromEntity(product);
     }
@@ -93,6 +89,16 @@ public class ProductService {
         category.getProducts().remove(product);
         categoryRepository.save(category);
         productRepository.deleteById(id);
+    }
+
+    private void makeProduct(PutProductDto putProductDto, Product product, Category category) {
+        product.setName(putProductDto.getName());
+        product.setCategory(category);
+        product.setPrice(putProductDto.getPrice());
+        product.setDescription(putProductDto.getDescription());
+        product.setStock(putProductDto.getStock());
+        category.getProducts().add(product);
+        product.setDescription(putProductDto.getDescription());
     }
 
 }
