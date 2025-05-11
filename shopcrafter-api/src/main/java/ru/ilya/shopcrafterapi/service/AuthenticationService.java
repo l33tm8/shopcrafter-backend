@@ -12,8 +12,10 @@ import ru.ilya.shopcraftercore.dto.auth.RefreshTokenRequest;
 import ru.ilya.shopcraftercore.dto.auth.VerifyOtpResponse;
 import ru.ilya.shopcraftercore.entity.auth.Role;
 import ru.ilya.shopcraftercore.entity.auth.User;
+import ru.ilya.shopcraftercore.entity.basket.Basket;
 import ru.ilya.shopcraftercore.exception.EmailValidationException;
 import ru.ilya.shopcraftercore.repository.auth.UserRepository;
+import ru.ilya.shopcraftercore.repository.basket.BasketRepository;
 
 import java.util.Optional;
 
@@ -24,16 +26,19 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final UserDetailsService userDetailsService;
+    private final BasketRepository basketRepository;
 
     public AuthenticationService(
             OtpService otpService,
             JwtService jwtService,
             UserRepository userRepository,
-            UserDetailsService userDetailsService) {
+            UserDetailsService userDetailsService,
+            BasketRepository basketRepository) {
         this.otpService = otpService;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
         this.userDetailsService = userDetailsService;
+        this.basketRepository = basketRepository;
     }
 
     public OtpResponse requestOtp(String email) {
@@ -42,7 +47,10 @@ public class AuthenticationService {
             User newUser = new User();
             newUser.setEmail(email);
             newUser.setRole(Role.STORE_ADMIN);
+            Basket basket = new Basket();
+            basket.setBasketOwner(newUser);
             userRepository.save(newUser);
+            basketRepository.save(basket);
         }
         boolean sent = otpService.sendOtp(email);
         if (!sent)

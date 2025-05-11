@@ -1,4 +1,4 @@
-package ru.ilya.shopcraftercore.service.goods.customization;
+package ru.ilya.shopcraftercore.service.customization;
 
 import org.springframework.stereotype.Service;
 import ru.ilya.shopcraftercore.repository.customization.BlockRepository;

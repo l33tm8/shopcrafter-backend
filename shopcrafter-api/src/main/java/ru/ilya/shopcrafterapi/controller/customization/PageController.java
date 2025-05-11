@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.ilya.shopcraftercore.dto.customization.PageDto;
 import ru.ilya.shopcraftercore.dto.customization.PutPageDto;
-import ru.ilya.shopcraftercore.service.goods.customization.PageService;
+import ru.ilya.shopcraftercore.service.customization.PageService;
 
 import java.util.List;
 
