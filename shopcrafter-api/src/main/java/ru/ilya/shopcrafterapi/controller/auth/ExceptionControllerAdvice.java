@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.ilya.shopcraftercore.exception.EmailValidationException;
+import ru.ilya.shopcraftercore.exception.EntityNotFoundException;
+import ru.ilya.shopcraftercore.exception.ForbiddenException;
 
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
@@ -28,9 +30,18 @@ public class ExceptionControllerAdvice {
         return ex.getMessage();
     }
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleEntityNotFoundException(EntityNotFoundException ex) { return ex.getMessage(); }
+
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String handleForbiddenException(ForbiddenException ex) { return ex.getMessage(); }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(Exception ex) {
         return ex.getMessage();
     }
+
 }

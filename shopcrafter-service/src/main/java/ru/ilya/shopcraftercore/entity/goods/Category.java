@@ -12,7 +12,7 @@ public class Category {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Product> products;
 
     @ManyToOne

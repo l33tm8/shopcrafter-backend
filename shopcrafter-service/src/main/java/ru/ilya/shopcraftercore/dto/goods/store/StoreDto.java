@@ -3,7 +3,6 @@ package ru.ilya.shopcraftercore.dto.goods.store;
 
 import ru.ilya.shopcraftercore.entity.goods.Category;
 import ru.ilya.shopcraftercore.entity.goods.Store;
-import ru.ilya.shopcraftercore.entity.goods.Worker;
 
 import java.util.List;
 
@@ -17,6 +16,8 @@ public class StoreDto {
 
 
     private String name;
+
+    private String description;
 
     private List<Long> categories;
 
@@ -32,6 +33,7 @@ public class StoreDto {
         dto.setCategories(store.getCategories() == null ? null : store.getCategories().stream()
                 .map(Category::getId)
                 .toList());
+        dto.setDescription(store.getDescription());
         return dto;
     }
 
@@ -73,5 +75,13 @@ public class StoreDto {
 
     public void setCategories(List<Long> categories) {
         this.categories = categories;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -1,10 +1,11 @@
 package ru.ilya.shopcrafterapi.controller.goods;
 
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import ru.ilya.shopcraftercore.dto.goods.category.CategoryDto;
-import ru.ilya.shopcraftercore.dto.goods.product.ProductDto;
 import ru.ilya.shopcraftercore.dto.goods.store.StoreDto;
 import ru.ilya.shopcraftercore.dto.goods.store.UpdateStoreDto;
 import ru.ilya.shopcraftercore.service.goods.StoreService;
@@ -32,13 +33,19 @@ public class StoreController {
     }
 
     @PostMapping
-    public StoreDto createStore(@RequestBody UpdateStoreDto storeDto) {
-        return storeService.createStore(storeDto);
+    @Operation(summary = "Создание магазина", description = "Создание магазина, авторизованный пользователь становится владельцем")
+    public StoreDto createStore(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdateStoreDto storeDto) {
+        return storeService.createStore(userDetails, storeDto);
     }
 
     @PutMapping("/{id}")
-    public StoreDto updateStore(@PathVariable long id, @RequestBody UpdateStoreDto storeDto) {
-        return storeService.updateStore(id, storeDto);
+    public StoreDto updateStore(@AuthenticationPrincipal UserDetails userDetails, @PathVariable long id, @RequestBody UpdateStoreDto storeDto) {
+        return storeService.updateStore(userDetails, id, storeDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteStore(@AuthenticationPrincipal UserDetails userDetails, @PathVariable long id) {
+        storeService.deleteStore(userDetails, id);
     }
 
 

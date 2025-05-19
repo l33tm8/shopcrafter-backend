@@ -1,6 +1,9 @@
 package ru.ilya.shopcraftercore.entity.auth;
 
 import jakarta.persistence.*;
+import ru.ilya.shopcraftercore.entity.goods.Store;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -11,13 +14,16 @@ public class User {
     private Long id;
     private String email;
 
-    @Column(nullable = true)
+    @Column
     private String name;
-    @Column(nullable = true)
+    @Column
     private String phone;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Store> stores;
 
     public Long getId() {
         return id;
@@ -57,5 +63,13 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<Store> getStores() {
+        return stores;
+    }
+
+    public void setStores(List<Store> stores) {
+        this.stores = stores;
     }
 }

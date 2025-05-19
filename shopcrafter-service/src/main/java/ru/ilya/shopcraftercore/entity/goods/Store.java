@@ -14,12 +14,13 @@ public class Store {
     @ManyToOne
     private User owner;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Worker> workers;
 
     private String name;
+    private String description;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Category> categories;
 
     public Long getId() {
@@ -76,5 +77,13 @@ public class Store {
 
     public void removeWorker(Worker worker) {
         workers.remove(worker);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
