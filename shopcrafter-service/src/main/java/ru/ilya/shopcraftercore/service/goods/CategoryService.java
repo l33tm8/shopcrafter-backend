@@ -82,4 +82,14 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 
+    @Transactional
+    public CategoryDto updateCategoryImage(long storeId, long id, String imageUrl) {
+        Category category = categoryRepository.findByStoreIdAndId(storeId, id);
+        if (category == null) {
+            throw new EntityNotFoundException("Category not found");
+        }
+        category.setImageUrl(imageUrl);
+        categoryRepository.save(category);
+        return CategoryDto.fromEntity(category);
+    }
 }

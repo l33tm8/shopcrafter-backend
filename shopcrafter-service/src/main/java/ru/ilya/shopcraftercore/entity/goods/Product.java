@@ -3,6 +3,7 @@ package ru.ilya.shopcraftercore.entity.goods;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,11 @@ public class Product {
     private String description;
     private BigDecimal price;
     private long stock;
+    
+    @ElementCollection
+    @CollectionTable(name = "product_images", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "image_url")
+    private List<String> imageUrls = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -65,5 +71,17 @@ public class Product {
 
     public void setStock(long stock) {
         this.stock = stock;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
+    public void addImageUrl(String imageUrl) {
+        this.imageUrls.add(imageUrl);
     }
 }

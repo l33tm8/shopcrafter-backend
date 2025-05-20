@@ -21,6 +21,8 @@ public class StoreDto {
 
     private List<Long> categories;
 
+    private String imageUrl;
+
     public static StoreDto fromEntity(Store store) {
         StoreDto dto = new StoreDto();
         dto.setId(store.getId());
@@ -34,6 +36,7 @@ public class StoreDto {
                 .map(Category::getId)
                 .toList());
         dto.setDescription(store.getDescription());
+        dto.setImageUrl(store.getImageUrl());
         return dto;
     }
 
@@ -83,5 +86,13 @@ public class StoreDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

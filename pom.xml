@@ -11,4 +11,11 @@
         <module>shopcrafter-api</module>
         <module>shopcrafter-service</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>2.25.27</version>
+        </dependency>
+    </dependencies>
 </project>

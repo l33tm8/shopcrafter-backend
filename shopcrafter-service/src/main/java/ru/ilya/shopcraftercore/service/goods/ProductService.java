@@ -101,4 +101,31 @@ public class ProductService {
         product.setDescription(putProductDto.getDescription());
     }
 
+    @Transactional
+    public ProductDto updateProductImage(long storeId, long categoryId, long id, String imageUrl) {
+        Product product = checkExists(storeId, categoryId, id);
+        product.addImageUrl(imageUrl);
+        productRepository.save(product);
+        return ProductDto.fromEntity(product);
+    }
+
+    @Transactional
+    public ProductDto deleteProductImage(long storeId, long categoryId, long id, String imageUrl) {
+        Product product = checkExists(storeId, categoryId, id);
+        product.getImageUrls().remove(imageUrl);
+        productRepository.save(product);
+        return ProductDto.fromEntity(product);
+    }
+
+    private Product checkExists(long storeId, long categoryId, long id) {
+        Category category = categoryRepository.findByStoreIdAndId(storeId, categoryId);
+        if (category == null) {
+            throw new RuntimeException("Category not found");
+        }
+        Product product = productRepository.findByCategoryIdAndId(categoryId, id);
+        if (product == null) {
+            throw new RuntimeException("Product not found");
+        }
+        return product;
+    }
 }

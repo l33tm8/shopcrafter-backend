@@ -3,6 +3,7 @@ package ru.ilya.shopcraftercore.dto.goods.product;
 import ru.ilya.shopcraftercore.entity.goods.Product;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ProductDto {
     private long id;
@@ -12,6 +13,7 @@ public class ProductDto {
     private BigDecimal price;
     private long stock;
     private String category;
+    private List<String> imageUrls;
 
     public long getId() {
         return id;
@@ -49,6 +51,14 @@ public class ProductDto {
         return category;
     }
 
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
     public static ProductDto fromEntity(Product product) {
         ProductDto dto = new ProductDto();
         dto.setId(product.getId());
@@ -57,6 +67,7 @@ public class ProductDto {
         dto.price = product.getPrice();
         dto.stock = product.getStock();
         dto.category = product.getCategory().getName();
+        dto.setImageUrls(product.getImageUrls());
         return dto;
     }
 }

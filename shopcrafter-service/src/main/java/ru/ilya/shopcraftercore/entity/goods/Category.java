@@ -18,6 +18,8 @@ public class Category {
     @ManyToOne
     private Store store;
 
+    private String imageUrl;
+
     public Long getId() {
         return id;
     }
@@ -48,5 +50,13 @@ public class Category {
 
     public void setStore(Store store) {
         this.store = store;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

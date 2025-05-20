@@ -70,7 +70,21 @@ public class StoreService {
         return StoreDto.fromEntity(store);
     }
 
-
+    @Transactional
+    public StoreDto updateStoreImage(UserDetails userDetails, long id, String imageUrl) {
+        Store store = storeRepository.findById(id).orElse(null);
+        if (store == null) {
+            throw new EntityNotFoundException("store not found");
+        }
+        User owner = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(()
+                -> new EntityNotFoundException("owner not found"));
+        if (!Objects.equals(store.getOwner().getId(), owner.getId())) {
+            throw new ForbiddenException("you don't have access to this store");
+        }
+        store.setImageUrl(imageUrl);
+        storeRepository.save(store);
+        return StoreDto.fromEntity(store);
+    }
 
     @Transactional
     public void deleteStore(UserDetails userDetails, long id) {
@@ -83,6 +97,17 @@ public class StoreService {
         if (!Objects.equals(store.getOwner().getId(), owner.getId())) {
             throw new ForbiddenException("you don't have access to this store");
         }
+
+        owner.getStores().remove(store);
+        userRepository.save(owner);
+
+        if (store.getWorkers() != null) {
+            store.getWorkers().clear();
+        }
+        if (store.getCategories() != null) {
+            store.getCategories().clear();
+        }
+
         storeRepository.delete(store);
     }
 }

@@ -19,6 +19,7 @@ public class Store {
 
     private String name;
     private String description;
+    private String imageUrl;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Category> categories;
@@ -85,5 +86,13 @@ public class Store {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
