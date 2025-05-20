@@ -1,5 +1,7 @@
 package ru.ilya.shopcrafterapi.controller.auth;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +14,8 @@ import ru.ilya.shopcraftercore.exception.ForbiddenException;
 
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
+    private static final Logger log = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
+
     @ExceptionHandler(EmailValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleEmailValidationException(EmailValidationException ex) {
@@ -41,6 +45,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(Exception ex) {
+        log.error(ex.getMessage(), ex);
         return ex.getMessage();
     }
 
