@@ -1,6 +1,7 @@
 package ru.ilya.shopcraftercore.entity.goods;
 
 import jakarta.persistence.*;
+import ru.ilya.shopcraftercore.entity.order.OrderItem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,6 +15,9 @@ public class Product {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private OrderItem orderItem;
 
     private String name;
     private String description;
@@ -83,5 +87,13 @@ public class Product {
 
     public void addImageUrl(String imageUrl) {
         this.imageUrls.add(imageUrl);
+    }
+
+    public OrderItem getOrderItem() {
+        return orderItem;
+    }
+
+    public void setOrderItem(OrderItem orderItem) {
+        this.orderItem = orderItem;
     }
 }

@@ -14,14 +14,14 @@ public class Store {
     @ManyToOne
     private User owner;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
     private List<Worker> workers;
 
     private String name;
     private String description;
     private String imageUrl;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
     private List<Category> categories;
 
     public Long getId() {

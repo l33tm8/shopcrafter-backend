@@ -71,6 +71,9 @@ public class ProductService {
         if (product == null) {
             return null;
         }
+        if (!category.getProducts().contains(product)) {
+            category.getProducts().add(product);
+        }
         makeProduct(putProductDto, product, category);
         productRepository.save(product);
         return ProductDto.fromEntity(product);
