@@ -13,7 +13,7 @@ public class Product {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Category category;
 
     @ManyToOne(cascade = CascadeType.ALL)
