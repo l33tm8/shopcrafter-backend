@@ -78,5 +78,9 @@ public class YookasaPaymentService {
             order.setStatus(OrderStatus.COMPLETED);
             orderRepository.save(order);
         }
+        else {
+            order.setStatus(OrderStatus.CANCELLED);
+            orderRepository.save(order);
+        }
     }
 }
