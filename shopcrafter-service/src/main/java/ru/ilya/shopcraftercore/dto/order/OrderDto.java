@@ -14,6 +14,7 @@ public class OrderDto {
     private List<OrderItemDto> items;
     private double totalAmount;
     private CustomerInfoDto customerInfo;
+    private String paymentUrl;
 
     public static OrderDto fromEntity(Order order) {
         OrderDto dto = new OrderDto();
@@ -95,6 +96,14 @@ public class OrderDto {
 
     public void setCustomerInfo(CustomerInfoDto customerInfo) {
         this.customerInfo = customerInfo;
+    }
+
+    public String getPaymentUrl() {
+        return paymentUrl;
+    }
+
+    public void setPaymentUrl(String paymentUrl) {
+        this.paymentUrl = paymentUrl;
     }
 }
 

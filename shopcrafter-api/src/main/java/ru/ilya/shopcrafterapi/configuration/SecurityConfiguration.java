@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auths ->
                         auths
-                                .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/orders/**").permitAll()
+                                .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/orders/**", "/yookassa/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
@@ -48,7 +48,8 @@ public class SecurityConfiguration {
                 "https://shopcrafter.vercel.app",
                 "http://localhost:3000",
                 "http://localhost:3001",
-                "http://localhost:8080"
+                "http://localhost:8080",
+                "https://mk98jy-94-31-176-56.ru.tuna.am"
         ));
         configuration.setAllowCredentials(true);
         configuration.setAllowedMethods(Arrays.asList(

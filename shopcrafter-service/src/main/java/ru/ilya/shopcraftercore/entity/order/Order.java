@@ -31,6 +31,9 @@ public class Order {
     @Column(nullable = false)
     private double totalAmount;
 
+    @Column(nullable = false)
+    private String yookasaId;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_info_id")
     private CustomerInfo customerInfo;
@@ -96,4 +99,12 @@ public class Order {
     public void setCustomerInfo(CustomerInfo customerInfo) {
         this.customerInfo = customerInfo;
     }
-} 
+
+    public String getYookasaId() {
+        return yookasaId;
+    }
+
+    public void setYookasaId(String yookasaId) {
+        this.yookasaId = yookasaId;
+    }
+}

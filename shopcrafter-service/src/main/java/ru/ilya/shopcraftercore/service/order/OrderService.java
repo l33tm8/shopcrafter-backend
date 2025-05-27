@@ -14,6 +14,8 @@ import ru.ilya.shopcraftercore.entity.order.OrderItem;
 import ru.ilya.shopcraftercore.entity.order.OrderStatus;
 import ru.ilya.shopcraftercore.repository.order.OrderRepository;
 import ru.ilya.shopcraftercore.repository.goods.ProductRepository;
+import ru.ilya.shopcraftercore.yookasa.PaymentRequestDto;
+import ru.ilya.shopcraftercore.yookasa.PaymentResponseDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,12 +24,17 @@ import java.util.stream.Collectors;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final YookasaPaymentService yookasaPaymentService;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository,
-                       ProductRepository productRepository) {
+    public OrderService(
+            OrderRepository orderRepository,
+            ProductRepository productRepository,
+            YookasaPaymentService yookasaPaymentService
+    ) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+        this.yookasaPaymentService = yookasaPaymentService;
     }
 
     @Transactional
@@ -54,9 +61,12 @@ public class OrderService {
             totalAmount += orderItem.getTotalPrice();
         }
         order.setTotalAmount(totalAmount);
-
+        order.setYookasaId("none");
         Order savedOrder = orderRepository.save(order);
-        return OrderDto.fromEntity(savedOrder);
+        PaymentResponseDto.Confirmation confirmation = yookasaPaymentService.makePayment(savedOrder);
+        OrderDto dto = OrderDto.fromEntity(savedOrder);
+        dto.setPaymentUrl(confirmation.getConfirmation_url());
+        return dto;
     }
 
     private static CustomerInfo getCustomerInfo(CreateOrderDto createOrderDto, Order order) {
