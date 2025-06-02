@@ -25,7 +25,7 @@ public class Order {
     @Column(nullable = false)
     private OrderStatus status;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items = new ArrayList<>();
 
     @Column(nullable = false)

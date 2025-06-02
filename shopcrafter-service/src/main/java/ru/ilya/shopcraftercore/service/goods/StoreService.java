@@ -7,24 +7,43 @@ import ru.ilya.shopcraftercore.dto.goods.store.StoreDto;
 import ru.ilya.shopcraftercore.dto.goods.store.UpdateStoreDto;
 import org.springframework.stereotype.Service;
 import ru.ilya.shopcraftercore.entity.auth.User;
+import ru.ilya.shopcraftercore.entity.goods.Category;
 import ru.ilya.shopcraftercore.entity.goods.Store;
+import ru.ilya.shopcraftercore.entity.goods.Product;
+import ru.ilya.shopcraftercore.entity.order.OrderItem;
 import ru.ilya.shopcraftercore.exception.EntityNotFoundException;
 import ru.ilya.shopcraftercore.exception.ForbiddenException;
 import ru.ilya.shopcraftercore.repository.auth.UserRepository;
+import ru.ilya.shopcraftercore.repository.goods.CategoryRepository;
 import ru.ilya.shopcraftercore.repository.goods.StoreRepository;
+import ru.ilya.shopcraftercore.repository.goods.ProductRepository;
+import ru.ilya.shopcraftercore.repository.order.OrderItemRepository;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.ArrayList;
 
 @Service
 public class StoreService {
     private final StoreRepository storeRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
+    private final OrderItemRepository orderItemRepository;
 
     @Autowired
-    public StoreService(StoreRepository storeRepository, UserRepository userRepository) {
+    public StoreService(
+            StoreRepository storeRepository,
+            UserRepository userRepository,
+            CategoryRepository categoryRepository,
+            ProductRepository productRepository,
+            OrderItemRepository orderItemRepository
+    ) {
         this.storeRepository = storeRepository;
         this.userRepository = userRepository;
+        this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     public StoreDto getStoreById(long id) {
@@ -104,10 +123,26 @@ public class StoreService {
         if (store.getWorkers() != null) {
             store.getWorkers().clear();
         }
+
         if (store.getCategories() != null) {
+            List<Category> categories = new ArrayList<>(store.getCategories());
+            for (Category category : categories) {
+                if (category.getProducts() != null) {
+                    List<Product> products = new ArrayList<>(category.getProducts());
+                    for (Product product : products) {
+                        List<OrderItem> orderItems = orderItemRepository.findByProductId(product.getId());
+                        for (OrderItem orderItem : orderItems) {
+                            orderItemRepository.delete(orderItem);
+                        }
+                        productRepository.delete(product);
+                    }
+                }
+                categoryRepository.delete(category);
+            }
             store.getCategories().clear();
         }
 
+        storeRepository.save(store);
         storeRepository.delete(store);
     }
 }
