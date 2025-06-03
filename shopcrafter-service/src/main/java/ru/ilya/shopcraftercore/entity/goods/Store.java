@@ -21,6 +21,8 @@ public class Store {
     private String description;
     private String imageUrl;
 
+    private String urlName;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
     private List<Category> categories;
 
@@ -30,6 +32,15 @@ public class Store {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+
+    public String getUrlName() {
+        return urlName;
+    }
+
+    public void setUrlName(String urlName) {
+        this.urlName = urlName;
     }
 
     public String getName() {

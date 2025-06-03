@@ -46,6 +46,11 @@ public class StoreService {
         this.orderItemRepository = orderItemRepository;
     }
 
+    public StoreDto getStoreByName(String name) {
+        Store store = storeRepository.findByDescription(name).orElseThrow( () -> new EntityNotFoundException("Store not found"));
+        return StoreDto.fromEntity(store);
+    }
+
     public StoreDto getStoreById(long id) {
         Store store = storeRepository.findById(id).orElse(null);
         if (store == null) {

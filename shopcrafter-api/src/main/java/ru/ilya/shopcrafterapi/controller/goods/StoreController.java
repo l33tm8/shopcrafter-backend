@@ -37,6 +37,11 @@ public class StoreController {
         return storeService.getStoreById(id);
     }
 
+    @GetMapping("/bydescription/{description}")
+    public StoreDto getStoreByName(@PathVariable String description) {
+        return storeService.getStoreByName(description);
+    }
+
     @PostMapping
     @Operation(summary = "Создание магазина", description = "Создание магазина, авторизованный пользователь становится владельцем")
     public StoreDto createStore(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdateStoreDto storeDto) {
