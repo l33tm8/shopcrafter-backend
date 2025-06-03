@@ -23,5 +23,6 @@ public class YookasaController {
     @Operation(description = "эндпоинт для юкассы, не трогать")
     public void serveYookasa(@RequestBody YookasaRequestDto dto) {
         yookasaPaymentService.changeOrderStatus(dto);
+        yookasaPaymentService.changeSubscriptionStatus(dto);
     }
 }

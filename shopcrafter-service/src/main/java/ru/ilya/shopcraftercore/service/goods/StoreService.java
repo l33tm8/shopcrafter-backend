@@ -47,7 +47,7 @@ public class StoreService {
     }
 
     public StoreDto getStoreByName(String name) {
-        Store store = storeRepository.findByDescription(name).orElseThrow( () -> new EntityNotFoundException("Store not found"));
+        Store store = storeRepository.findByDescription("/" + name).orElseThrow( () -> new EntityNotFoundException("Store not found"));
         return StoreDto.fromEntity(store);
     }
 
@@ -67,7 +67,10 @@ public class StoreService {
     public StoreDto createStore(UserDetails userDetails, UpdateStoreDto storeDto) {
         Store store = new Store();
         store.setName(storeDto.getName());
-        store.setDescription(storeDto.getDescription());
+        if (!storeDto.getDescription().startsWith("/"))
+            store.setDescription("/" + storeDto.getDescription());
+        else
+            store.setDescription(storeDto.getDescription());
         User owner = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(()
                 -> new EntityNotFoundException("owner not found"));
         store.setOwner(owner);

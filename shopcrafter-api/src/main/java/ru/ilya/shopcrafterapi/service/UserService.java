@@ -31,6 +31,15 @@ public class UserService {
         return UserDto.fromUser(user.get());
     }
 
+    public User getUserByDetails(UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user.get();
+    }
+
     public UserDto updateUser(UserDetails userDetails, UserDto userDto) {
         String email = userDetails.getUsername();
         Optional<User> userOpt = userRepository.findByEmail(email);
